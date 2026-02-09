@@ -6,7 +6,7 @@ using namespace std;
 int main(){
 
     int DAT[100][100] = {0};
-int n;
+    int n;
     int flag[100] = {0};
     cin >> n;
     string str[100];
@@ -19,12 +19,12 @@ int n;
                 flag[i] =1;
             if (str[i][j] != str[i][j+1]){
                 DAT[i][int(str[i][j])] = 1;
-}
-}
-}
-int sum = 0;
+            } 
+        }
+    }
+    int sum = 0;
     for (int i = 0; i < n; i++)
-sum += flag[i];
+         sum += flag[i];
     
     cout << n - sum;
     
