@@ -2,7 +2,8 @@
 
 * 문제 설명:
 - a와 b로만 이루어진 문자열이 주어질 때 a를 모두 연속으로 만들고자 함
-- 문자열은 원형이므로, 처음과 끝은 서로 인접해있음
+
+*/
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
