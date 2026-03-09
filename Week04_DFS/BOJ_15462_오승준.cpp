@@ -16,7 +16,8 @@ void dfs(int cnt) {
     }
    
     for (int i = 1; i <= n; i++) {
-        dat[i] = i;
+        if(cnt>0 && dat[cnt-1] > i) continue;
+        dat[cnt] = i;
         dfs(cnt+1);
         
 
