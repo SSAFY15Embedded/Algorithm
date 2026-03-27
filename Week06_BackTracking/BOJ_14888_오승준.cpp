@@ -10,13 +10,13 @@ int n;
 
 char path[11];
 
-int mx;
+int mx=-21e8;
 int mn=21e8;
 int res;
 void backtrack(int now) {
 	if (now == n - 1) {
 		res = arr[0];
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n-1; i++) {
 
 			if (path[i] == '+') {
 				res += arr[i + 1];
@@ -44,8 +44,10 @@ void backtrack(int now) {
 	for (int i = 0; i < 4; i++) {
 		if (operNum[i] > 0) {
 			path[now] = oper[i];
+			operNum[i]--;
 			backtrack(now+1);
 			path[now] = '\0';
+			operNum[i]++;
 		}
 	}
 }
