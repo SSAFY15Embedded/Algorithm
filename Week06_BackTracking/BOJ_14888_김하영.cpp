@@ -45,7 +45,6 @@ int main() {
     for (int i = 0; i < N; i++) {
         cin >> num[i];
     }
-
     for (int i = 0; i < 4; i++) {
         cin >> arr[i];
     }
