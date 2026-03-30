@@ -1,78 +1,72 @@
 #include <iostream>
 #include <queue>
-#include <vector>
+#include <cstring>
 using namespace std;
-
 
 int map[101][101];
 int r, c;
 
-int dy[4] = { -1,1,0,0 };
-int dx[4] = { 0,0,-1,1 };
+int dy[4] = { -1, 1, 0, 0 };
+int dx[4] = { 0, 0, -1, 1 };
 
-int one_cnt;
-int visited[101][101];
-vector<pair<int, int>> v;
-void bfs(int y, int x) {
-	
-	queue<pair<int, int>> q;
-	q.push({ y,x });
-	
-	
-	
-	auto now = q.front(); q.pop();
-	for (int i = 0; i < 4; i++) {
-		int ny = now.first + dy[i];
-		int nx = now.second + dx[i];
-		if (map[ny][nx] == 0) { // 4방향 중 하나라도 0이면
-			v.push_back({ now.first, now.second });
-			break;
-		}
+int cheese_cnt = 0;
+bool visited[101][101];
 
-	}
-	
+void bfs() {
+    queue<pair<int, int>> q;
+    q.push({ 0, 0 });
+    visited[0][0] = true;
+
+    while (!q.empty()) {
+        int y = q.front().first;
+        int x = q.front().second;
+        q.pop();
+
+        for (int i = 0; i < 4; i++) {
+            int ny = y + dy[i];
+            int nx = x + dx[i];
+
+            if (ny >= 0 && nx >= 0 && ny < r && nx < c && !visited[ny][nx]) {
+                visited[ny][nx] = true; 
+                
+                if (map[ny][nx] == 0) {
+                    q.push({ ny, nx });
+                }
+                else if (map[ny][nx] == 1) {
+                    map[ny][nx] = 0;
+                    cheese_cnt--; 
+                    
+                }
+            }
+        }
+    }
 }
+
 int main() {
-	cin >> r >> c;
-	for (int i = 0; i < r; i++) {
-		for (int j = 0; j < c; j++) {
-			cin >> map[i][j];
-		}
-	}
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-	bool flag = true;
-	int hour = -1;
-	int ans = 0;
-	while (flag) {
-		ans = one_cnt;
-		one_cnt = 0;
-	
-		hour++;
-		flag = false;
-		v.clear();
-		for (int i = 1; i < r - 1; i++) {
-			for (int j = 1; j < c - 1; j++) {
-				if (map[i][j] == 1) {
-					one_cnt++; // 1의 총 개수
+    cin >> r >> c;
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cin >> map[i][j];
+            if (map[i][j] == 1) cheese_cnt++;
+        }
+    }
 
-					bfs(i, j);
-					flag = true;
-				}
+    int hour = 0;
+    int ans = 0;
 
-			}
-		}
-		
-		for (int i = 0; i < v.size(); i++) {
-			map[v[i].first][v[i].second] = 0;
-		}
-	
-	}
+    while (cheese_cnt > 0) {
+        ans = cheese_cnt; 
+        memset(visited, false, sizeof(visited)); 
+        bfs(); 
+        
+        hour++;
+    }
 
-	
-	cout << hour << '\n';
-	cout << ans;
+    cout << hour << '\n';
+    cout << ans << '\n';
 
-	
-	
-
+    return 0;
 }
